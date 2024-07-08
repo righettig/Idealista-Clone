@@ -1,4 +1,4 @@
-/* .property-card {
+.property-card {
     border: 1px solid #ccc;
     border-radius: 8px;
     overflow: hidden;
@@ -26,4 +26,4 @@
 
 .property-contact-button:hover {
     background-color: #0056b3;
-} */
+}

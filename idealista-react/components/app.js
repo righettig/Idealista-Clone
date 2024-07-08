@@ -28,11 +28,9 @@ const sampleProperties = [
 
 const App = () => {
     return (
-        // <div>
-        //     <Banner />
-        //     <Sidebar />
-        // </div>
         <div className="app">
+            <Banner />
+            <Sidebar />
             <h1>Property Listings</h1>
             <PropertyList properties={sampleProperties} />
         </div>
