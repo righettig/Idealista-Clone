@@ -1,5 +1,5 @@
-const Home = () => {
-  return <div>Hello world!</div>
-};
+import App from "../components/app";
 
-export default Home;
+const Index = () => <App />;
+
+export default Index;
