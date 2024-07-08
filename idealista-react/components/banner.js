@@ -2,7 +2,7 @@ const Banner = () => {
     return (
         <header>
             <div>This is the logo</div>
-            <div>This is the header</div>
+            <div className="foo">This is the header</div>
         </header>
     )
 };
