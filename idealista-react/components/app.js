@@ -13,12 +13,39 @@ const App = () => {
             .catch(error => console.error('Error fetching properties:', error));
     }, []);
 
+    const handleAddProperty = () => {
+        const newProperty = {
+            id: sampleProperties.length + 1,
+            title: 'New Property',
+            address: 'New Location',
+            price: '1000',
+            image: '',
+        };
+        setProperties([...sampleProperties, newProperty]);
+
+        fetch('http://localhost:3001/properties', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newProperty),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Property added successfully:', data);
+        })
+        .catch(error => {
+            console.error('Error adding property:', error);
+        });
+    };
+
     return (
         <div className="app">
             <Banner />
             <Sidebar />
             <h1>Property Listings</h1>
             <PropertyList properties={sampleProperties} />
+            <button onClick={handleAddProperty}>Add property</button>
         </div>
     )
 }
