@@ -1,23 +1,25 @@
+import * as dotenv from 'dotenv';
+
+import express from 'express';
+import cors, { CorsOptions } from 'cors';
+import propertiesRouter from './routes/properties.router';
+
 const environment = (process.env.NODE_ENV || '').trim();
 console.log(`Running in ${environment} mode`);
 
-require('dotenv').config({
+dotenv.config({
     path: `.env.${environment || 'development'}`
 });
 
-const express = require('express');
-const cors = require('cors');
-const propertiesRouter = require('./routes/properties.router');
 const app = express();
 
-const corsOptions = {
+const corsOptions: CorsOptions = {
     origin: process.env.CORS_ORIGIN,
     methods: 'GET,POST,PUT,DELETE',
     allowedHeaders: 'Content-Type,Authorization'
 };
 
 app.use(cors(corsOptions));
-
 app.use(express.json());
 
 app.use('/properties', propertiesRouter);

@@ -1,10 +1,11 @@
-const express = require('express');
+import express, { Request, Response } from 'express';
+
+import { getProperties, addProperty, deleteProperty } from './properties.service';
+
 const router = express.Router();
 
-const { getProperties, addProperty, deleteProperty } = require('./properties.service.js');
-
 // Get all properties
-router.get('/', (req, res) => {
+router.get('/', (req: Request, res: Response) => {
     console.log("Retrieving properties");
     try {
         const properties = getProperties();
@@ -16,7 +17,7 @@ router.get('/', (req, res) => {
 });
 
 // Add a new property
-router.post('/', (req, res) => {
+router.post('/', (req: Request, res: Response) => {
     console.log("Adding new property");
     try {
         const newProperty = req.body;
@@ -35,7 +36,7 @@ router.post('/', (req, res) => {
 });
 
 // Delete a property by id
-router.delete('/:id', (req, res) => {
+router.delete('/:id', (req: Request, res: Response) => {
     console.log("Deleting property");
     try {
         const id = parseInt(req.params.id, 10);
@@ -55,4 +56,4 @@ router.delete('/:id', (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

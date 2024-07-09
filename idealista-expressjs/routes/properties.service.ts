@@ -1,4 +1,13 @@
-let sampleProperties = [
+interface Property {
+    id: number;
+    image: string;
+    title: string;
+    address: string;
+    price: string;
+    description: string;
+}
+
+const sampleProperties: Property[] = [
     {
         id: 1,
         image: 'https://img4.idealista.it/blur/WEB_LISTING-M/0/id.pro.it.image.master/b8/cf/e5/566791792.webp',
@@ -26,19 +35,17 @@ let sampleProperties = [
 ];
 
 // Retrieve all properties
-function getProperties() {
-    return sampleProperties;
-}
+const getProperties = () => sampleProperties;
 
 // Add a new property
-function addProperty(newProperty) {
+const addProperty = (newProperty: Property) => {
     newProperty.id = sampleProperties.length ? sampleProperties[sampleProperties.length - 1].id + 1 : 1;
     sampleProperties.push(newProperty);
     return newProperty;
 }
 
 // Delete a property by id
-function deleteProperty(id) {
+const deleteProperty = (id: number) => {
     const index = sampleProperties.findIndex(property => property.id === id);
     if (index !== -1) {
         sampleProperties.splice(index, 1);
@@ -47,8 +54,4 @@ function deleteProperty(id) {
     return false;
 }
 
-module.exports = {
-    getProperties,
-    addProperty,
-    deleteProperty
-};
+export { getProperties, addProperty, deleteProperty };
