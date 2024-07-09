@@ -31,51 +31,51 @@ const App = () => {
                 setLoading(false);
             }
         };
-    
+
         fetchData();
     }, []);
 
-    const handleAddProperty = useCallback(() => {
+    const handleAddProperty = useCallback(async () => {
         const newProperty = {
-            id: sampleProperties.length + 1,
+            id: sampleProperties.length + 1, // Ensure unique ID generation strategy
             title: 'New Property',
             address: 'New Location',
             price: '1000',
             image: '',
         };
-        setProperties(prevProperties => [...prevProperties, newProperty]);
 
-        fetch('http://localhost:3001/properties', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newProperty),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Property added successfully:', data);
-        })
-        .catch(error => {
-            console.error('Error adding property:', error);
-        });
-    }, [sampleProperties]);
-
-    const handleDeleteProperty = useCallback((propertyId) => {
-        setProperties(prevProperties => prevProperties.filter(property => property.id !== propertyId));
-
-        fetch(`http://localhost:3001/properties/${propertyId}`, {
-            method: 'DELETE',
-        })
-        .then(response => {
+        try {
+            const response = await fetch('http://localhost:3001/properties', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newProperty),
+            });
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
+            const data = await response.json();
+            setProperties(prevProperties => [...prevProperties, data]);
+            console.log('Property added successfully:', data);
+        } catch (error) {
+            console.error('Error adding property:', error);
+        }
+    }, [sampleProperties]);
+
+    const handleDeleteProperty = useCallback(async (propertyId) => {
+        try {
+            const response = await fetch(`http://localhost:3001/properties/${propertyId}`, {
+                method: 'DELETE',
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            setProperties(prevProperties => prevProperties.filter(property => property.id !== propertyId));
             console.log('Property deleted successfully');
-        })
-        .catch(error => {
+        } catch (error) {
             console.error('Error deleting property:', error);
-        });
+        }
     }, []);
 
     if (loading) return <p>Loading...</p>;
@@ -88,7 +88,7 @@ const App = () => {
             <h1>Property Listings</h1>
             <PropertyList
                 properties={sampleProperties}
-                onDelete={handleDeleteProperty} 
+                onDelete={handleDeleteProperty}
             />
             <button onClick={handleAddProperty}>Add property</button>
         </div>
