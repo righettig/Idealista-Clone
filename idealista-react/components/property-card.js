@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import styles from "./property-card.module.css";
 
-const PropertyCard = ({ property }) => {
+const PropertyCard = ({ property, onDelete }) => {
   return (
     <div className={styles["property-card"]}>
       <img src={property.image} alt={property.title} className={styles["property-image"]} />
@@ -12,6 +12,13 @@ const PropertyCard = ({ property }) => {
         <p>{property.address}</p>
         <p>{property.price}</p>
         <button className={styles["property-contact-button"]}>Contact</button>
+        <button
+            className={styles["property-delete-button"]}
+            onClick={() => onDelete(property.id)}
+            aria-label={`Delete ${property.title}`}
+          >
+            Delete
+          </button>
       </div>
     </div>
   );

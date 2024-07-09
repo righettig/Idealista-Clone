@@ -3,11 +3,15 @@ import PropertyCard from './property-card';
 
 import { propertyList } from "./property-list.module.css";
 
-const PropertyList = ({ properties }) => {
+const PropertyList = ({ properties, onDelete }) => {
   return (
     <div className={propertyList}>
       {properties.map(property => (
-        <PropertyCard key={property.id} property={property} />
+        <PropertyCard 
+          key={property.id} 
+          property={property} 
+          onDelete={onDelete}
+        />
       ))}
     </div>
   );

@@ -39,12 +39,33 @@ const App = () => {
         });
     };
 
+    const handleDeleteProperty = (propertyId) => {
+        setProperties(sampleProperties.filter(property => property.id !== propertyId));
+
+        // Optionally send the delete request to the backend
+        fetch(`http://localhost:3001/properties/${propertyId}`, {
+            method: 'DELETE',
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            console.log('Property deleted successfully');
+        })
+        .catch(error => {
+            console.error('Error deleting property:', error);
+        });
+    };
+
     return (
         <div className="app">
             <Banner />
             <Sidebar />
             <h1>Property Listings</h1>
-            <PropertyList properties={sampleProperties} />
+            <PropertyList
+                properties={sampleProperties}
+                onDelete={handleDeleteProperty} 
+            />
             <button onClick={handleAddProperty}>Add property</button>
         </div>
     )
