@@ -33,4 +33,8 @@ PropertyCard.propTypes = {
   }).isRequired,
 };
 
+const PropertyCardMemo = React.memo(PropertyCard);
+
 export default PropertyCard;
+
+export { PropertyCardMemo };
