@@ -1,17 +1,22 @@
-require('dotenv').config();
+const environment = (process.env.NODE_ENV || '').trim();
+console.log(`Running in ${environment} mode`);
+
+require('dotenv').config({
+    path: `.env.${environment || 'development'}`
+});
 
 const express = require('express');
 const cors = require('cors');
 const propertiesRouter = require('./routes/properties');
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+    origin: process.env.CORS_ORIGIN,
+    methods: 'GET,POST,PUT,DELETE',
+    allowedHeaders: 'Content-Type,Authorization'
+};
 
-// const corsOptions = {
-//     origin: 'http://localhost:3000', // Only allow requests from this origin
-//     methods: 'GET,POST,PUT,DELETE', // Allowed methods
-//     allowedHeaders: 'Content-Type,Authorization', // Allowed headers
-// };
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
