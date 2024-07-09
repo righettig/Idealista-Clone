@@ -29,14 +29,32 @@ const sampleProperties = [
 ];
 
 router.get('/', (req, res) => {
+    console.log("Retrieving properties");
+
     res.json(sampleProperties);
 });
 
 router.post('/', (req, res) => {
+    console.log("Adding new property");
+
     const newProperty = req.body;
     newProperty.id = sampleProperties.length ? sampleProperties[sampleProperties.length - 1].id + 1 : 1;
     sampleProperties.push(newProperty);
     res.status(201).json(newProperty);
+});
+
+router.delete('/:id', (req, res) => {
+    console.log("Deleting property");
+
+    const id = parseInt(req.params.id, 10);
+    const index = sampleProperties.findIndex(property => property.id === id);
+
+    if (index !== -1) {
+        sampleProperties.splice(index, 1); // Remove the property from the array
+        res.status(204).send(); // No content
+    } else {
+        res.status(404).json({ message: 'Property not found' });
+    }
 });
 
 module.exports = router;
