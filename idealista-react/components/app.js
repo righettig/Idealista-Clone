@@ -33,7 +33,7 @@ const App = () => {
         };
 
         fetchData();
-    }, []);
+    }, []); // <-- the effect is only executed once
 
     const handleAddProperty = useCallback(async () => {
         const newProperty = {
@@ -41,7 +41,8 @@ const App = () => {
             title: 'New Property',
             address: 'New Location',
             price: '1000',
-            image: '',
+            image: 'https://placehold.co/400',
+            description: 'new property'
         };
 
         try {
