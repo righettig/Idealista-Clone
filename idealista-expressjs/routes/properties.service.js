@@ -1,7 +1,4 @@
-const express = require('express');
-const router = express.Router();
-
-const sampleProperties = [
+let sampleProperties = [
     {
         id: 1,
         image: 'https://img4.idealista.it/blur/WEB_LISTING-M/0/id.pro.it.image.master/b8/cf/e5/566791792.webp',
@@ -28,33 +25,30 @@ const sampleProperties = [
     }
 ];
 
-router.get('/', (req, res) => {
-    console.log("Retrieving properties");
+// Retrieve all properties
+function getProperties() {
+    return sampleProperties;
+}
 
-    res.json(sampleProperties);
-});
-
-router.post('/', (req, res) => {
-    console.log("Adding new property");
-
-    const newProperty = req.body;
+// Add a new property
+function addProperty(newProperty) {
     newProperty.id = sampleProperties.length ? sampleProperties[sampleProperties.length - 1].id + 1 : 1;
     sampleProperties.push(newProperty);
-    res.status(201).json(newProperty);
-});
+    return newProperty;
+}
 
-router.delete('/:id', (req, res) => {
-    console.log("Deleting property");
-
-    const id = parseInt(req.params.id, 10);
+// Delete a property by id
+function deleteProperty(id) {
     const index = sampleProperties.findIndex(property => property.id === id);
-
     if (index !== -1) {
-        sampleProperties.splice(index, 1); // Remove the property from the array
-        res.status(204).send(); // No content
-    } else {
-        res.status(404).json({ message: 'Property not found' });
+        sampleProperties.splice(index, 1);
+        return true;
     }
-});
+    return false;
+}
 
-module.exports = router;
+module.exports = {
+    getProperties,
+    addProperty,
+    deleteProperty
+};

@@ -7,7 +7,7 @@ require('dotenv').config({
 
 const express = require('express');
 const cors = require('cors');
-const propertiesRouter = require('./routes/properties');
+const propertiesRouter = require('./routes/properties.router');
 const app = express();
 
 const corsOptions = {
