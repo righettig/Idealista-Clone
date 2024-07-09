@@ -26,7 +26,7 @@ const sampleProperties = [
         address: 'Licciana Nardi',
         price: '490.000 €',
         description: "STUDIOAREA AULLA per info e contatti 329/0733879 Propone in vendita Bella Villa indipendente di 300 mq con garage doppio con apertura motorizzata e cantine, la villa è ottimamente esposta, sulla collina di Costamala, in posizione riservata a 4 km dal casello autostradale di Aulla e ad 1 Km da tutti i servizi, a 20 km dal mare e dalla montagna."
-    },
+    }
 ];
 
 app.use(cors());
@@ -37,10 +37,17 @@ app.use(cors());
 //     allowedHeaders: 'Content-Type,Authorization', // Allowed headers
 // };
 
-// app.use(cors(corsOptions));
+app.use(express.json());
 
 app.get('/properties', (req, res) => {
     res.json(sampleProperties);
+});
+
+app.post('/properties', (req, res) => {
+    const newProperty = req.body;
+    newProperty.id = sampleProperties.length ? sampleProperties[sampleProperties.length - 1].id + 1 : 1; // Assign a new id
+    sampleProperties.push(newProperty);
+    res.status(201).json(newProperty);
 });
 
 const PORT = process.env.PORT || 3001;
